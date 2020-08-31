@@ -1,0 +1,49 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateCockpitDataVacanciesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('cockpit_data_vacancies', function (Blueprint $table) {
+            $table->bigInteger('id')->unique()->nullable();
+            $table->string('vacancy_id')->nullable();
+            $table->string('owner_id')->nullable();
+            $table->string('owner_department_id')->nullable();
+            $table->string('title');
+            $table->string('creation_reason')->nullable();
+            $table->boolean('is_advertisable');
+            $table->string('author_id')->nullable();
+            $table->dateTime('datetime_created');
+            $table->dateTime('datetime_modified');
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
+            $table->string('company_id')->nullable();
+            $table->string('company_contact_person_id')->nullable();
+            $table->integer('max_allowed_applications')->nullable();
+            $table->boolean('cv_required');
+            $table->integer('total_hired_candidates_wanted')->nullable();
+            $table->integer('working_hours_min')->nullable();
+            $table->integer('working_hours_max')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('cockpit_data_vacancies');
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "goudenvis/cockpit-data",
+    "description": "A package to retrieve your organisation data from RecruitNow | Cockpit",
+    "authors": [
+        {
+            "name": "Goudenvis",
+            "email": "me@goudenvis.nl"
+        }
+    ],
+    "require": {}
+}
