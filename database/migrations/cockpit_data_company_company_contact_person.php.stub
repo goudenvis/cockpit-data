@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CockpitDataCompanyCompanyContactPerson extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('cockpit_data_company_company_contact_persons', function (Blueprint $table) {
+            $table->bigInteger('id');
+            $table->string('company_id')->nullable();
+            $table->string('company_contact_person_id')->nullable()->index('cp_data_com_com_per_id');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('cockpit_data_company_company_contact_persons');
+    }
+}

@@ -1,0 +1,49 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CockpitDataCandidates extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('cockpit_data_candidates', function (Blueprint $table) {
+            $table->bigInteger('id');
+            $table->string('candidate_id')->nullable();
+            $table->string('remote_id')->nullable();
+            $table->string('owner_id')->nullable();
+            $table->string('owner_department_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('middle_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('email_address')->nullable();
+            $table->string('author_id')->nullable();
+            $table->string('author_department_id')->nullable();
+            $table->dateTime('datetime_created');
+            $table->dateTime('datetime_modified');
+            $table->string('referral')->nullable();
+            $table->string('origin')->nullable();
+            $table->boolean('is_deleted')->nullable();
+            $table->dateTime('datetime_deleted')->nullable();
+            $table->string('communication_prefered_language')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('cockpit_data_candidates');
+    }
+}

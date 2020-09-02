@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CockpitDataCustomCharacteristicCategories extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('cockpit_data_custom_characteristic_categories', function (Blueprint $table) {
+            $table->bigInteger('id')->primary();
+            $table->string('custom_characteristics_category_id')->nullable()->index('cp_data_cus_char_cat_id');
+            $table->string('name')->nullable();
+            $table->boolean('is_deleted')->nullable();
+            $table->string('parent_category_id')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('cockpit_data_custom_characteristic_categories');
+    }
+}

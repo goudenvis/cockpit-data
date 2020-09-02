@@ -2,29 +2,60 @@
 /*
  * Configuration for the Cockpit Data extraction
  * Use:
- *  'CockpitDataTable' => [
+ *  [
+ *      'cockpit_table_name => 'Vacancies', //Tablename used by Cockpit
  *      'class'   => 'CockpitDataClassName', //Classname without the full namespace
- *      'internal_database => 'local_database_name' //Optional. Use for pivottables, without model
+ *      'pivot' => //Optional. Use for tables without Datetime_created column.
  *      'columns' => [
- *              'cockpitColumnName' => 'database_table_name'
+ *              'CockpitColumnName' => 'database_table_name'
  *      ]
  * ]
  */
 
 return [
-    'CandidateMatchfields' => [
-        'class' => '',
-        'internal_database' => 'cockpit_data_candidate_matchfield',
+    [
+        'cockpit_table_name' => 'Tasks',
+        'class' => 'CockpitDataTask',
+        'columns' => [
+            'Id'=> 'id',
+            'TaskId' => 'task_id',
+            'DocumentLinkId' => 'document_link_id',
+            'SubDocumentLinkId' => 'sub_document_link_id',
+            'DueDate' => 'due_date',
+            'Title' => 'title',
+            'Description' => 'discription',
+            'IsDone' => 'is_done',
+            'StatusId' => 'status_id',
+            'StatusName' => 'status_name',
+            'SubjectId' => 'subject_id',
+            'SubjectName' => 'subject_name',
+            'OwnerId' => 'owner_id',
+            'OwnerDepartmentId' => 'owner_department_id'
+        ]
+    ],
+    [
+        'cockpit_table_name' => 'CandidateMatchFields',
+        'class' => 'CockpitDataCandidateMatchField',
+        'pivot' => true,
         'columns' => [
             'Id'=> 'id',
             'CandidateId' => 'candidate_id',
             'MatchfieldId' => 'matchfield_id',
         ]
     ],
-    'CandidateNotes' => [
-        'class' => 'CandidateNote',
-        'internal_database' => 'cockpit_data_candidate_notes',
-        'history' => 30,
+    [
+        'cockpit_table_name' => 'VacancyMatchFields',
+        'class' => 'CockpitDataVacancyMatchField',
+        'pivot' => true,
+        'columns' => [
+            'Id'=> 'id',
+            'VacancyId' => 'vacancy_id',
+            'MatchfieldId' => 'matchfield_id',
+        ]
+    ],
+    [
+        'cockpit_table_name' => 'CandidateNotes',
+        'class' => 'CockpitDataCandidateNote',
         'columns' => [
             'Id'=> 'id',
             'CandidateId' => 'candidate_id',
@@ -35,9 +66,53 @@ return [
             'DatetimeCreated' => 'datetime_created',
         ]
     ],
-    'CandidateProposalStateTransitions' => [
-        'class' => 'CandidateProposalStateTransition',
-        'history' => 30,
+    [
+        'cockpit_table_name' => 'CandidateCustomCharacteristics',
+        'class' => 'CockpitDataCandidateCustomCharacteristic',
+        'columns' => [
+            'Id'=> 'id',
+            'CandidateId' => 'candidate_id',
+            'CustomCharacteristicsCategoryId' => 'custom_characteristics_category_id',
+            'Category' => 'custom_characteristic',
+            'SubCategory' => 'value',
+        ]
+    ],
+    [
+        'cockpit_table_name' => 'CandidateCustomCharacteristicCategories',
+        'class' => 'CockpitDataCandidateCustomCharacteristicCategory',
+        'columns' => [
+            'Id'=> 'id',
+            'CustomCharacteristicsCategoryId' => 'custom_characteristics_category_id',
+            'Name' => 'name',
+            'IsDeleted' => 'is_deleted',
+            'ParentCategoryId' => 'parent_category_id',
+        ]
+    ],
+    [
+        'cockpit_table_name' => 'VacancyCustomCharacteristics',
+        'class' => 'CockpitDataVacancyCustomCharacteristic',
+        'columns' => [
+            'Id'=> 'id',
+            'VacancyId' => 'vacancy_id',
+            'CustomCharacteristicsCategoryId' => 'custom_characteristics_category_id',
+            'Category' => 'custom_characteristic',
+            'SubCategory' => 'value',
+        ]
+    ],
+    [
+        'cockpit_table_name' => 'CompanyCustomCharacteristics',
+        'class' => 'CockpitDataCompanyCustomCharacteristic',
+        'columns' => [
+            'Id'=> 'id',
+            'CompanyId' => 'company_id',
+            'CustomCharacteristicsCategoryId' => 'custom_characteristics_category_id',
+            'Category' => 'custom_characteristic',
+            'SubCategory' => 'value',
+        ]
+    ],
+    [
+        'cockpit_table_name' => 'CandidateProposalStateTransitions',
+        'class' => 'CockpitDataCandidateProposalStateTransition',
         'columns' => [
             'Id'=> 'id',
             'CandidateProposalId' => 'candidate_proposal_id',
@@ -49,9 +124,9 @@ return [
             'SystemGenerated' => 'system_generated',
         ]
     ],
-    'CandidateStateTransitions' => [
-        'class' => 'CandidateStateTransition',
-        'history' => 30,
+    [
+        'cockpit_table_name' => 'CandidateStateTransitions',
+        'class' => 'CockpitDataCandidateStateTransition',
         'columns' => [
             'Id'=> 'id',
             'CandidateId' => 'candidate_id',
@@ -63,9 +138,10 @@ return [
             'SystemGenerated' => 'system_generated',
         ]
     ],
-    'CandidateProposals' => [
-        'class' => '',
-        'internal_database' => 'cockpit_data_candidate_proposal',
+    [
+        'cockpit_table_name' => 'CandidateProposals',
+        'pivot' => true,
+        'class' => 'CockpitDataCandidateProposal',
         'unique_id' => 'candidate_proposal_id',
         'columns' => [
             'Id'=> 'id',
@@ -75,9 +151,9 @@ return [
             'CompanyContactPersonId' => 'company_contact_person_id',
         ]
     ],
-    'Candidates' => [
-        'class' => 'Candidate',
-        'history' => 30,
+    [
+        'cockpit_table_name' => 'Candidates',
+        'class' => 'CockpitDataCandidate',
         'unique_id' => 'candidate_id',
         'columns' => [
             'Id'=> 'id',
@@ -98,21 +174,31 @@ return [
             'Origin' => 'origin',
             'IsDeleted' => 'is_deleted',
             'DateTimeDeleted' => 'datetime_deleted',
+            'CommunicationPreferedLanguage' => 'communication_prefered_language'
         ]
     ],
-    'Companies' => [
-        'class' => 'Company',
+    [
+        'cockpit_table_name' => 'Companies',
+        'class' => 'CockpitDataCompany',
         'unique_id' => 'company_id',
         'columns' => [
             'Id'=> 'id',
             'CompanyId' => 'company_id',
             'Name' => 'name',
-            'RemoteId' => 'remote_id'
+            'RemoteId' => 'remote_id',
+            'OwnerDepartmentId' => 'owner_department_id',
+            'AuthorId' => 'author_id',
+            'AuthorDepartmentId' => 'author_department_id',
+            'DatetimeCreated' => 'datetime_created',
+            'DatetimeModified' => 'datetime_modified',
+            'IsDeleted' => 'is_deleted',
+            'DatetimeDeleted' => 'datetime_deleted',
+
         ]
     ],
-    'CompanyContactNotes' => [
-        'class' => 'CompanyContactNote',
-        'history' => 30,
+    [
+        'cockpit_table_name' => 'CompanyContactNotes',
+        'class' => 'CockpitDataCompanyContactNote',
         'unique_id' => 'company_contact_id',
         'columns' => [
             'Id'=> 'id',
@@ -125,27 +211,38 @@ return [
             'DatetimeCreated' => 'datetime_created',
         ]
     ],
-    'CompanyContactPersons' => [
-        'class' => 'CompanyContactPerson',
+    [
+        'cockpit_table_name' => 'CompanyContactPersons',
+        'class' => 'CockpitDataCompanyContactPerson',
         'unique_id' => 'company_contact_person_id',
         'columns' => [
             'Id'=> 'id',
             'CompanyContactPersonId' => 'company_contact_person_id',
             'Name' => 'name',
-            'RemoteId' => 'remote_id'
+            'RemoteId' => 'remote_id',
+            'OwnerId' => 'owner_id',
+            'OwnerDepartmentId' => 'owner_department_id',
+            'AuthorId' => 'author_id',
+            'AuthorDepartmentId' => 'author_department_id',
+            'DatetimeCreated' => 'datetime_created',
+            'DatetimeModified' => 'datetime_modified',
+            'IsDeleted' => 'is_deleted',
+            'DatetimeDeleted' => 'datetime_deleted',
         ]
     ],
-    'Company_CompanyContactPerson' => [
-        'class' => '',
-        'internal_database' => 'cockpit_data_company_company_contact_person',
+    [
+        'cockpit_table_name' => 'Company_CompanyContactPerson',
+        'class' => 'CockpitDataCompanyCompanyContactPerson',
+        'pivot' => true,
         'columns' => [
             'Id'=> 'id',
             'CompanyId' => 'company_id',
             'CompanyContactPersonId' => 'company_contact_person_id',
         ]
     ],
-    'Departments' => [
-        'class' => 'Department',
+    [
+        'cockpit_table_name' => 'Departments',
+        'class' => 'CockpitDataDepartment',
         'unique_id' => 'department_id',
         'columns' => [
             'Id'=> 'id',
@@ -154,9 +251,9 @@ return [
             'RemoteId' => 'remote_id'
         ]
     ],
-    'MatchStateTransitions' => [
-        'class' => 'MatchStateTransition',
-        'history' => 30,
+    [
+        'cockpit_table_name' => 'MatchStateTransitions',
+        'class' => 'CockpitDataMatchStateTransition',
         'columns' => [
             'Id'=> 'id',
             'MatchId' => 'match_id',
@@ -169,9 +266,9 @@ return [
             'Data' => 'datetime',
         ]
     ],
-    'Matches' => [
-        'class' => 'Match',
-        'history' => 30,
+    [
+        'cockpit_table_name' => 'Matches',
+        'class' => 'CockpitDataMatch',
         'unique_id' => 'match_id',
         'columns' => [
             'Id'=> 'id',
@@ -193,8 +290,9 @@ return [
             'TrackingFields' => 'tracking_fields',
         ]
     ],
-    'MatchFields' => [
-        'class' => 'MatchField',
+    [
+        'cockpit_table_name' => 'MatchFields',
+        'class' => 'CockpitDataMatchField',
         'columns' => [
             'Id'=> 'id',
             'MatchFieldId' => 'match_id',
@@ -202,20 +300,22 @@ return [
             'Value' => 'value',
         ]
     ],
-    'Users' => [
-        'class' => 'User',
+    [
+        'cockpit_table_name' => 'Users',
+        'class' => 'CockpitDataUser',
         'unique_id' => 'user_id',
         'columns' => [
             'Id'=> 'id',
             'UserId' => 'user_id',
             'FirstName' => 'first_name',
+            'MiddleName' => 'middle_name',
             'LastName' => 'last_name',
             'RemoteId' => 'remote_id'
         ]
     ],
-    'Vacancies' => [
-        'class' => 'Vacancy',
-        'history' => 30,
+    [
+        'cockpit_table_name' => 'Vacancies',
+        'class' => 'CockpitDataVacancy',
         'unique_id' => 'id',
         'columns' => [
             'Id'=> 'id',
@@ -239,8 +339,9 @@ return [
             'WorkingHoursMax' => 'working_hours_max',
         ]
     ],
-    'VacancyKnockoutQuestions' => [
-        'class' => 'VacancyKnockoutQuestion',
+    [
+        'cockpit_table_name' =>'VacancyKnockoutQuestions',
+        'class' => 'CockpitDataVacancyKnockoutQuestion',
         'columns' => [
             'Id'=> 'id',
             'VacancyId' => 'vacancy_id',
@@ -248,9 +349,9 @@ return [
             'Name' => 'name',
         ]
     ],
-    'VacancyNotes' => [
-        'class' => 'VacancyNote',
-        'history' => 30,
+    [
+        'cockpit_table_name' => 'VacancyNotes',
+        'class' => 'CockpitDataVacancyNote',
         'unique_id' => 'note_id',
         'columns' => [
             'Id'=> 'id',
@@ -262,9 +363,9 @@ return [
             'DatetimeCreated' => 'datetime_created',
         ]
     ],
-    'VacancyStateTransitions' => [
-        'class' => 'VacancyStateTransition',
-        'history' => 30,
+    [
+        'cockpit_table_name' => 'VacancyStateTransitions',
+        'class' => 'CockpitDataVacancyStateTransition',
         'columns' => [
             'Id'=> 'id',
             'VacancyId' => 'vacancy_id',

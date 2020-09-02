@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CockpitDataVacancyMatchfield extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('cockpit_data_vacancy_matchfield', function (Blueprint $table) {
+            $table->bigInteger('id');
+            $table->string('vacancy_id')->nullable()->index();
+            $table->string('matchfield_id')->nullable()->index();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('cockpit_data_vacancy_matchfield');
+    }
+}

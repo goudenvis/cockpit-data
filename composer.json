@@ -14,5 +14,12 @@
         "psr-4": {
             "Goudenvis\\CockpitData\\": "src"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Goudenvis\\CockpitData\\CockpitDataServiceProvider"
+            ]
+        }
     }
 }
