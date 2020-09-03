@@ -37,5 +37,7 @@ return [
      * Define location where the models are placed.
      * Update when the models are moved.
      */
-    'model-location' => 'Goudenvis\CockpitData\Models\\'
+    'model-location' => 'Goudenvis\CockpitData\Models\\',
+
+    'dispatch_jobs' => env('COCKPITDATA_DISPATCH_JOBS', false)
 ];

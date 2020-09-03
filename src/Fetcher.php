@@ -23,6 +23,7 @@ class Fetcher
     {
         self::$classNameDefault = config('cockpit-data.model-location');
     }
+
     public static function run($table, $history)
     {
         self::$history = $history;
@@ -151,15 +152,18 @@ class Fetcher
                 $query = 'SELECT * FROM [cockpit-etl-europlanit].dbo.' . $table;
             }
 
-            foreach($dbh->query($query) as $row) {
-                $keys = collect($row)->keys();
+            if ($dbh->query($query)) {
+                foreach($dbh->query($query) as $row) {
+                    $keys = collect($row)->keys();
 
-                $cleanedKeys = $keys->map(function($key) {
-                    return is_string($key) ? $key : null;
-                })->filter();
+                    $cleanedKeys = $keys->map(function($key) {
+                        return is_string($key) ? $key : null;
+                    })->filter();
 
-                $data[] = collect($row)->only($cleanedKeys)->toArray();
+                    $data[] = collect($row)->only($cleanedKeys)->toArray();
+                }
             }
+
         } catch (PDOException $e) {
             Log::error($e->getMessage());
             echo "Failed to get DB handle: " . $e->getMessage() . "\n";

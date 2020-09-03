@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CockpitDataCandidateMatchfield extends Migration
+class CockpitDataVacancyMatchfields extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CockpitDataCandidateMatchfield extends Migration
      */
     public function up()
     {
-        Schema::create('cockpit_data_candidate_matchfield', function (Blueprint $table) {
+        Schema::create('cockpit_data_vacancy_matchfields', function (Blueprint $table) {
             $table->bigInteger('id');
-            $table->string('candidate_id')->nullable()->index();
+            $table->string('vacancy_id')->nullable()->index();
             $table->string('matchfield_id')->nullable()->index();
         });
     }
@@ -27,6 +27,6 @@ class CockpitDataCandidateMatchfield extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cockpit_data_candidate_matchfield');
+        Schema::dropIfExists('cockpit_data_vacancy_matchfields');
     }
 }

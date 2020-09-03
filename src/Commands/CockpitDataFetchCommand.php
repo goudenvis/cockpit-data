@@ -19,9 +19,14 @@ class CockpitDataFetchCommand extends Command
 
 //        \DB::enableQueryLog();
 
-        $tables->each(function($table) {
-            Fetcher::run($table, $this->option('history'));
-        });
+        if ( (app()->environment() == 'production' && !$this->option('direct')) ||
+            config('cockpitData.dispatch_jobs') ) {
+            dd('yo');
+        } else {
+            $tables->each(function($table) {
+                Fetcher::run($table, $this->option('history'));
+            });
+        }
 
 //        $this->comment(count(\DB::getQueryLog()) . ' queries has run');
         $this->comment('All done in ' . now()->diffInSeconds($start) . ' seconds');
