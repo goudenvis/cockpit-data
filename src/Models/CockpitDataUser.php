@@ -29,7 +29,7 @@ class CockpitDataUser extends Model
     {
         $relation = $this->belongsToMany(
             CockpitDataDepartment::class,
-            'department_user',
+            'cockpit_data_department_user',
             'user_id',
             'department_id'
         );
