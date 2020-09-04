@@ -14,7 +14,7 @@ class CockpitDataCandidateCustomCharacteristics extends Migration
     public function up()
     {
         Schema::create('cockpit_data_candidate_custom_characteristics', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->bigInteger('id')->index();
             $table->string('candidate_id')->nullable();
             $table->string('custom_characteristics_category_id')->nullable();
             $table->string('custom_characteristic')->nullable();

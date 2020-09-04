@@ -10,6 +10,10 @@ class CockpitDataDepartment extends Model
 
     protected $guarded = [];
 
+    public $incrementing = false;
+
+    protected $primaryKey = 'department_id';
+
     public function users()
     {
         return $this->belongsToMany(CockpitDataUser::class,
