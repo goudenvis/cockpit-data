@@ -13,7 +13,7 @@ class CockpitDataDepartment extends Model
     public function users()
     {
         return $this->belongsToMany(CockpitDataUser::class,
-            'department_user',
+            'cockpit_data_department_user',
             'department_id',
             'user_id'
         );
