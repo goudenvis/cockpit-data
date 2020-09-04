@@ -31,7 +31,7 @@ return [
      * This number is overruled when the history option is chosen.
      * (in that case all data will be fetched)
      */
-    'history' => 2,
+    'history' => env('COCKPIT_DATA_HISTORY', 2),
 
     /*
      * Define location where the models are placed.

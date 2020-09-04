@@ -33,13 +33,12 @@ class Base implements ShouldQueue
     public function handle()
     {
         foreach ($this->tables as $table) {
-            dd($table);
             Fetcher::run($table, $this->history);
         }
     }
 
     public function tags()
     {
-        return collect($this->tables)->keys()->toArray();
+        return collect($this->tables)->pluck('cockpit_table_name')->toArray();
     }
 }

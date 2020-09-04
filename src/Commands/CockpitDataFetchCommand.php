@@ -3,6 +3,7 @@
 namespace Goudenvis\CockpitData\Commands;
 
 use Goudenvis\CockpitData\Fetcher;
+use Goudenvis\CockpitData\Jobs\Base;
 use Illuminate\Console\Command;
 
 class CockpitDataFetchCommand extends Command
@@ -21,7 +22,9 @@ class CockpitDataFetchCommand extends Command
 
         if ( (app()->environment() == 'production' && !$this->option('direct')) ||
             config('cockpitData.dispatch_jobs') ) {
-            dd('yo');
+            $tables->each(function($table) {
+                Base::dispatch([$table], $this->option('history'));
+            });
         } else {
             $tables->each(function($table) {
                 Fetcher::run($table, $this->option('history'));

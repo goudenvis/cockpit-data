@@ -13,59 +13,59 @@
  */
 
 return [
-//    [
-//        'cockpit_table_name' => 'Tasks',
-//        'class' => 'CockpitDataTask',
-//        'columns' => [
-//            'Id'=> 'id',
-//            'TaskId' => 'task_id',
-//            'DocumentLinkId' => 'document_link_id',
-//            'SubDocumentLinkId' => 'sub_document_link_id',
-//            'DueDate' => 'due_date',
-//            'Title' => 'title',
-//            'Description' => 'discription',
-//            'IsDone' => 'is_done',
-//            'StatusId' => 'status_id',
-//            'StatusName' => 'status_name',
-//            'SubjectId' => 'subject_id',
-//            'SubjectName' => 'subject_name',
-//            'OwnerId' => 'owner_id',
-//            'OwnerDepartmentId' => 'owner_department_id'
-//        ]
-//    ],
-//    [
-//        'cockpit_table_name' => 'CandidateMatchFields',
-//        'class' => 'CockpitDataCandidateMatchFields',
-//        'pivot' => true,
-//        'columns' => [
-//            'Id'=> 'id',
-//            'CandidateId' => 'candidate_id',
-//            'MatchfieldId' => 'matchfield_id',
-//        ]
-//    ],
-//    [
-//        'cockpit_table_name' => 'VacancyMatchFields',
-//        'class' => 'CockpitDataVacancyMatchfield',
-//        'pivot' => true,
-//        'columns' => [
-//            'Id'=> 'id',
-//            'VacancyId' => 'vacancy_id',
-//            'MatchfieldId' => 'matchfield_id',
-//        ]
-//    ],
-//    [
-//        'cockpit_table_name' => 'CandidateNotes',
-//        'class' => 'CockpitDataCandidateNote',
-//        'columns' => [
-//            'Id'=> 'id',
-//            'CandidateId' => 'candidate_id',
-//            'NoteId' => 'note_id',
-//            'Category' => 'category',
-//            'SubCategory' => 'sub_category',
-//            'AuthorId' => 'author_id',
-//            'DatetimeCreated' => 'datetime_created',
-//        ]
-//    ],
+    [
+        'cockpit_table_name' => 'Tasks',
+        'class' => 'CockpitDataTask',
+        'columns' => [
+            'Id'=> 'id',
+            'TaskId' => 'task_id',
+            'DocumentLinkId' => 'document_link_id',
+            'SubDocumentLinkId' => 'sub_document_link_id',
+            'DueDate' => 'due_date',
+            'Title' => 'title',
+            'Description' => 'discription',
+            'IsDone' => 'is_done',
+            'StatusId' => 'status_id',
+            'StatusName' => 'status_name',
+            'SubjectId' => 'subject_id',
+            'SubjectName' => 'subject_name',
+            'OwnerId' => 'owner_id',
+            'OwnerDepartmentId' => 'owner_department_id'
+        ]
+    ],
+    [
+        'cockpit_table_name' => 'CandidateMatchFields',
+        'class' => 'CockpitDataCandidateMatchFields',
+        'pivot' => true,
+        'columns' => [
+            'Id'=> 'id',
+            'CandidateId' => 'candidate_id',
+            'MatchfieldId' => 'matchfield_id',
+        ]
+    ],
+    [
+        'cockpit_table_name' => 'VacancyMatchFields',
+        'class' => 'CockpitDataVacancyMatchfield',
+        'pivot' => true,
+        'columns' => [
+            'Id'=> 'id',
+            'VacancyId' => 'vacancy_id',
+            'MatchfieldId' => 'matchfield_id',
+        ]
+    ],
+    [
+        'cockpit_table_name' => 'CandidateNotes',
+        'class' => 'CockpitDataCandidateNote',
+        'columns' => [
+            'Id'=> 'id',
+            'CandidateId' => 'candidate_id',
+            'NoteId' => 'note_id',
+            'Category' => 'category',
+            'SubCategory' => 'sub_category',
+            'AuthorId' => 'author_id',
+            'DatetimeCreated' => 'datetime_created',
+        ]
+    ],
     [
         'cockpit_table_name' => 'CandidateCustomCharacteristics',
         'class' => 'CockpitDataCandidateCustomCharacteristic',

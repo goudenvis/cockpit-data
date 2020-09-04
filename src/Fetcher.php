@@ -44,7 +44,42 @@ class Fetcher
 
         $data = self::cockpitFetcher($table['cockpit_table_name'], $startDate);
 
-        self::storer($table, $data);
+        if (array_key_exists('pivot', $table)) {
+            self::multiSaver($table, $data);
+        } else {
+            self::storer($table, $data);
+        }
+    }
+
+    private static function multiSaver($tableContent,$data)
+    {
+        $class = config('cockpit-data.model-location') . $tableContent['class'];
+        $class = new $class;
+
+        $lastStored = $class::orderByDesc('id')->first();
+
+        $result = $data->chunk(100)->map(function($collection) use ($tableContent, $lastStored) {
+            return $collection->map(function ($row) use ($tableContent, $lastStored) {
+                $newRow = self::cockpitDataCollector($row, $tableContent['columns']);
+
+                if ($lastStored) {
+                    //check witch id's already stored and remove
+                    if ($lastStored->id < $newRow['id']) {
+//                    if (!$alreadyStoredIds->contains($test['id'])) {
+                        return $newRow;
+                    }
+                } else {
+                    return $newRow;
+                }
+            })->filter();
+        });
+
+        // store everything left
+        $result->map(function($collection) use ($class) {
+            $table = $class->getTable();
+
+            DB::table($table)->insert($collection->toArray());
+        });
     }
 
     /*
