@@ -23,7 +23,7 @@ class CockpitDataFetchCommand extends Command
         if ( (app()->environment() == 'production' && !$this->option('direct')) ||
             config('cockpitData.dispatch_jobs') ) {
             $tables->each(function($table) {
-                Base::dispatch([$table], $this->option('history'));
+                Base::dispatch([$table], $this->option('history'))->onQueue('cockpit');
             });
         } else {
             $tables->each(function($table) {

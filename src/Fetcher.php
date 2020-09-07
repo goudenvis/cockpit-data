@@ -26,9 +26,16 @@ class Fetcher
 
     public static function run($table, $history)
     {
+        $start = now();
+        Log::info('Fetch Cockpit data ' . $table['cockpit_table_name']);
+
         self::$history = $history;
 
         self::prepare($table);
+
+        $seconds = $start->diffInSeconds(now());
+
+        Log::info('Fetch Cockpit data ' . $table['cockpit_table_name'] . ' finished in (' . $seconds . ' seconds)');
     }
 
     /*
@@ -88,6 +95,18 @@ class Fetcher
      * Set default location for CockpitData models
      */
     private static $classNameDefault;
+
+    /*
+     * cockpitMultiDataCollector
+     *
+     * Collect multiple cockpitdata rows
+     */
+    private static function cockpitMultiDataCollector($rawContent, $columns)
+    {
+        return collect($rawContent)->map(function($row) use ($columns) {
+            return self::cockpitDataCollector($row, $columns);
+        });
+    }
 
     /*
      * cockpitDataCollector
