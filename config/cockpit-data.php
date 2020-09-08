@@ -39,5 +39,5 @@ return [
      */
     'model-location' => 'Goudenvis\CockpitData\Models\\',
 
-    'dispatch_jobs' => env('COCKPITDATA_DISPATCH_JOBS', false)
+    'dispatch_jobs' => env('COCKPIT_DATA_DISPATCH_JOBS', false)
 ];
