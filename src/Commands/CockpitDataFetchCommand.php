@@ -16,7 +16,7 @@ class CockpitDataFetchCommand extends Command
     {
         $start = now();
 
-        $tables = collect(config('cockpit-data-tables'));
+        $tables = $this->getTables();
 
 //        \DB::enableQueryLog();
 
@@ -33,5 +33,15 @@ class CockpitDataFetchCommand extends Command
 
 //        $this->comment(count(\DB::getQueryLog()) . ' queries has run');
         $this->comment('All done in ' . now()->diffInSeconds($start) . ' seconds');
+    }
+
+    private function getTables()
+    {
+        if ($this->option('table')) {
+            return collect(config('cockpit-data-tables'))
+                ->where('cockpit_table_name', $this->option('table'))->unique('cockpit_table_names');
+        } else {
+            return collect(config('cockpit-data-tables'));
+        }
     }
 }

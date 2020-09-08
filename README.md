@@ -52,7 +52,7 @@ php artisan cockpit:data -history
 ##### **Table**
 In the case you want to only fetch a single table, you can choose this option. It requires a tablename. Use the same name as configured in the *cockpit-data-tables* config file under: *cockpit_table_name*
 ``` bash
-php artisan cockpit:data -table=Vacancies
+php artisan cockpit:data -table Vacancies
 ```
 
 ## Changelog
