@@ -2,6 +2,9 @@
 
 All notable changes to `cockpit-data` will be documented in this file
 
+## 1.2.2 - 2020-09-08
+- Remove publishes on register in serviceprovider
+
 ## 1.2.1 - 2020-09-08
 - Change mergeConfigFiles to publishes
 

@@ -16,13 +16,6 @@ class CockpitDataServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->publishes(
-            __DIR__ . '/../config/cockpit-data.php', 'cockpit-data'
-        );
-
-        $this->publishes(
-            __DIR__ . '/../config/cockpit-data-tables.php', 'cockpit-data-tables'
-        );
     }
 
     /**
