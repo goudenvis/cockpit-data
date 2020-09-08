@@ -1,6 +1,11 @@
 {
     "name": "goudenvis/cockpit-data",
     "description": "A package to retrieve your organisation data from RecruitNow | Cockpit",
+    "keywords": [
+        "cockpit",
+        "goudenvis"
+    ],
+    "license": "MIT",
     "authors": [
         {
             "name": "Goudenvis",
