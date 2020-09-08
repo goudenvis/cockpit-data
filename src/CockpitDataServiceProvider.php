@@ -16,11 +16,11 @@ class CockpitDataServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(
+        $this->publishes(
             __DIR__ . '/../config/cockpit-data.php', 'cockpit-data'
         );
 
-        $this->mergeConfigFrom(
+        $this->publishes(
             __DIR__ . '/../config/cockpit-data-tables.php', 'cockpit-data-tables'
         );
     }
