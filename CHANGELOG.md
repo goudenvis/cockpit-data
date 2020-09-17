@@ -2,6 +2,9 @@
 
 All notable changes to `cockpit-data` will be documented in this file
 
+## 1.2.3 - 2020-09-17
+- Add relation Vacancy > Owner
+
 ## 1.2.2 - 2020-09-08
 - Remove publishes on register in serviceprovider
 

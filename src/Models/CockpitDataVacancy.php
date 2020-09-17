@@ -30,6 +30,11 @@ class CockpitDataVacancy extends Model
         return $this->hasMany(CockpitDataMatch::class, 'vacancy_id', 'vacancy_id');
     }
 
+    public function owner()
+    {
+        return $this->belongsTo(CockpitDataUser::class, 'owner_id', 'user_id');
+    }
+
     public function isOnline(Carbon $date): bool
     {
         $stateTransitions = $this->stateTransitions->sortByDesc('datetime_created');
