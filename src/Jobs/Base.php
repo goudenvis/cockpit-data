@@ -2,19 +2,19 @@
 
 namespace Goudenvis\CockpitData\Jobs;
 
+use Illuminate\Bus\Queueable;
 use App\Helpers\QueuedCommands;
 use Goudenvis\CockpitData\Fetcher;
-use Illuminate\Bus\Queueable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 
 class Base implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $timeout = 2500;
+    public $timeout = 3600;
 
     protected $tables;
     protected $history;
