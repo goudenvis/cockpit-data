@@ -31,7 +31,8 @@ class CockpitDataUser extends Model
             CockpitDataDepartment::class,
             'cockpit_data_department_user',
             'user_id',
-            'department_id'
+            'department_id',
+            'user_id'
         );
 
         return $relation;
