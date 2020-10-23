@@ -2,6 +2,10 @@
 
 All notable changes to `cockpit-data` will be documented in this file
 
+## 1.4 - 2020-10-23
+- Add some relationships
+- Make models more readable
+
 ## 1.3 - 2020-09-23
 - Change CockpitDataUser CockpitDataDepartment relationship
 

@@ -17,22 +17,47 @@ class CockpitDataVacancy extends Model
 
     public function stateTransitions()
     {
-        return $this->hasMany(CockpitDataVacancyStateTransition::class,  'vacancy_id', 'vacancy_id');
+        return $this->hasMany(
+            CockpitDataVacancyStateTransition::class,
+            'vacancy_id',
+            'vacancy_id'
+        );
     }
 
     public function department()
     {
-        return $this->belongsTo(CockpitDataDepartment::class, 'owner_department_id', 'department_id');
+        return $this->belongsTo(
+            CockpitDataDepartment::class,
+            'owner_department_id',
+            'department_id'
+        );
     }
 
     public function matches()
     {
-        return $this->hasMany(CockpitDataMatch::class, 'vacancy_id', 'vacancy_id');
+        return $this->hasMany(
+            CockpitDataMatch::class,
+            'vacancy_id',
+            'vacancy_id'
+        );
     }
 
     public function owner()
     {
-        return $this->belongsTo(CockpitDataUser::class, 'owner_id', 'user_id');
+        return $this->belongsTo(
+            CockpitDataUser::class,
+            'owner_id',
+            'user_id'
+        );
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(
+            CockpitDataCompany::class,
+            'company_id',
+            'company_id'
+        );
     }
 
     public function isOnline(Carbon $date): bool

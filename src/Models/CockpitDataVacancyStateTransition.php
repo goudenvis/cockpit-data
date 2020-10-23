@@ -16,11 +16,19 @@ class CockpitDataVacancyStateTransition extends Model
 
     public function vacancy()
     {
-        return $this->belongsTo(CockpitDataVacancy::class, 'vacancy_id','vacancy_id');
+        return $this->belongsTo(
+            CockpitDataVacancy::class,
+            'vacancy_id',
+            'vacancy_id'
+        );
     }
 
     public function author()
     {
-        return $this->belongsTo(CockpitDataUser::class, 'author_id', 'user_id');
+        return $this->belongsTo(
+            CockpitDataUser::class,
+            'author_id',
+            'user_id'
+        );
     }
 }
