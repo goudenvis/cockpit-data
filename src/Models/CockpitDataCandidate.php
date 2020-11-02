@@ -27,4 +27,22 @@ class CockpitDataCandidate extends Model
             'candidate_id'
         );
     }
+
+    public function owner()
+    {
+        return $this->belongsTo(
+            CockpitDataUser::class,
+            'owner_id',
+            'user_id'
+        );
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(
+            CockpitDataUser::class,
+            'author_id',
+            'user_id'
+        );
+    }
 }

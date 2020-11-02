@@ -72,7 +72,6 @@ class Fetcher
                 if ($lastStored) {
                     //check witch id's already stored and remove
                     if ($lastStored->id < $newRow['id']) {
-//                    if (!$alreadyStoredIds->contains($test['id'])) {
                         return $newRow;
                     }
                 } else {
