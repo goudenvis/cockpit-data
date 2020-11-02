@@ -2,6 +2,9 @@
 
 All notable changes to `cockpit-data` will be documented in this file
 
+## 1.4.1 - 2020-11-02
+- Add some relationships
+
 ## 1.4 - 2020-10-23
 - Add some relationships
 - Make models more readable
