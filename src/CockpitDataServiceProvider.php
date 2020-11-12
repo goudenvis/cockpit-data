@@ -12,10 +12,6 @@ class CockpitDataFetchCommand extends Command
 
     public $description = 'Fetch data from Cockpit use \'--table="" to fetch a specific table ';
 
-    private $dedicated = [
-        'CandidateStateTransistions'
-    ];
-
     public function handle()
     {
         $start = now();
@@ -24,14 +20,10 @@ class CockpitDataFetchCommand extends Command
 
 //        \DB::enableQueryLog();
 
-        if (
-            (app()->environment() == 'production' && !$this->option('direct')) ||
-            config('cockpitData.dispatch_jobs')
-        ) {
-
+        if ( (app()->environment() == 'production' && !$this->option('direct')) ||
+            config('cockpitData.dispatch_jobs') ) {
             $tables->each(function($table) {
-                Base::dispatch([$table], $this->option('history'))
-                    ->onQueue('cockpit');
+                Base::dispatch([$table], $this->option('history'))->onQueue('cockpit');
             });
         } else {
             $tables->each(function($table) {
@@ -47,8 +39,7 @@ class CockpitDataFetchCommand extends Command
     {
         if ($this->option('table')) {
             return collect(config('cockpit-data-tables'))
-                ->where('cockpit_table_name', $this->option('table'))
-                ->unique('cockpit_table_names');
+                ->where('cockpit_table_name', $this->option('table'))->unique('cockpit_table_names');
         } else {
             return collect(config('cockpit-data-tables'));
         }
