@@ -2,6 +2,10 @@
 
 All notable changes to `cockpit-data` will be documented in this file
 
+## 1.5 - 2020-11-12
+- Changed default CockpitData fetcher.
+- Added new value for config file: cockpit-data-tables: update_columns
+
 ## 1.4.1 - 2020-11-02
 - Add some relationships
 

@@ -81,7 +81,7 @@ class Fetcher
         });
 
         // store everything left
-        $result->map(function($collection) use ($class) {
+        $result->each(function($collection) use ($class) {
             $table = $class->getTable();
 
             DB::table($table)->insert($collection->toArray());
@@ -130,13 +130,8 @@ class Fetcher
         $unique_ident = $table['unique_id'] ?? 'id';
         $class = config('cockpit-data.model-location') . $table['class'];
         $tableContent = $table['columns'];
-        dump($table['cockpit_table_name']);
 
-        if (array_key_exists('pivot', $table)) {
-            self::pivot($data, $unique_ident, $class, $tableContent);
-        } else {
-            self::single($data,$unique_ident,$class,$tableContent);
-        }
+        self::single($data,$unique_ident,$class,$tableContent);
     }
 
     private static function pivot(Collection $data, $unique_ident, $class, $tableContent)
@@ -164,18 +159,15 @@ class Fetcher
             }
         });
     }
-
-    private static function single($data, $unique_ident, $class, $tableContent)
+    private static function single($data, $unique_idents, $class, $tableContent)
     {
-        $data->each(function($row) use ($unique_ident, $class, $tableContent) {
-            $row = self::cockpitDataCollector($row, $tableContent);
-            $result = $class::firstWhere($unique_ident, $row[$unique_ident]);
-
-            if ($result == null) {
-                $class::create($row->toArray());
-            } else {
-                $result->update($row->toArray());
-            }
+        $data->each(function($row) use ($unique_idents, $class, $tableContent) {
+            $dataRow = self::cockpitDataCollector($row, $tableContent);
+            $keys = $dataRow->except($unique_idents)->keys()->toArray();
+            $class::updateOrCreate(
+                $dataRow->only($unique_idents)->toArray(),
+                $dataRow->except($unique_idents)->toArray()
+            );
         });
     }
 
