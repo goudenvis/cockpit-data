@@ -1,47 +1,77 @@
 <?php
 
-namespace Goudenvis\CockpitData\Commands;
+namespace Goudenvis\CockpitData;
 
-use Illuminate\Console\Command;
-use Goudenvis\CockpitData\Fetcher;
-use Goudenvis\CockpitData\Jobs\Base;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\ServiceProvider;
+use Goudenvis\CockpitData\Commands\CockpitDataFetchCommand;
 
-class CockpitDataFetchCommand extends Command
+class CockpitDataServiceProvider extends ServiceProvider
 {
-    public $signature = 'cockpit:data {--history} {--t|table=} {--d|direct}';
-
-    public $description = 'Fetch data from Cockpit use \'--table="" to fetch a specific table ';
-
-    public function handle()
+    /**
+     * Register services.
+     *
+     * @return void
+     */
+    public function register()
     {
-        $start = now();
-
-        $tables = $this->getTables();
-
-//        \DB::enableQueryLog();
-
-        if ( (app()->environment() == 'production' && !$this->option('direct')) ||
-            config('cockpitData.dispatch_jobs') ) {
-            $tables->each(function($table) {
-                Base::dispatch([$table], $this->option('history'))->onQueue('cockpit');
-            });
-        } else {
-            $tables->each(function($table) {
-                Fetcher::run($table, $this->option('history'));
-            });
-        }
-
-//        $this->comment(count(\DB::getQueryLog()) . ' queries has run');
-        $this->comment('All done in ' . now()->diffInSeconds($start) . ' seconds');
     }
 
-    private function getTables()
+    /**
+     * Bootstrap services.
+     *
+     * @return void
+     */
+    public function boot()
     {
-        if ($this->option('table')) {
-            return collect(config('cockpit-data-tables'))
-                ->where('cockpit_table_name', $this->option('table'))->unique('cockpit_table_names');
-        } else {
-            return collect(config('cockpit-data-tables'));
+
+        if ($this->app->runningInConsole()) {
+
+            foreach (self::migrationFileNames() as $migrationFileName) {
+                $this->runMigration($migrationFileName);
+            }
+
+            $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+
+            $this->publishes([
+                __DIR__ . '/../config/cockpit-data.php' => config_path('cockpit-data.php'),
+                __DIR__ . '/../config/cockpit-data-tables.php' => config_path('cockpit-data-tables.php'),
+            ]);
+
+            $this->commands([
+                CockpitDataFetchCommand::class
+            ]);
         }
+    }
+
+    private static function migrationFileNames()
+    {
+        return collect(File::files(__DIR__.'/../database/migrations'))->map(function ($file) {
+            $name = $file->getFileName();
+
+            return Str::before($name, '.stub');
+        })->toArray();
+    }
+
+    public function runMigration($migrationFileName)
+    {
+        if (! $this->migrationFileExists($migrationFileName)) {
+            $this->publishes([
+                __DIR__ . "/../database/migrations/{$migrationFileName}.stub" => database_path('migrations/' . date('Y_m_d_His', time()) . '_' . $migrationFileName),
+            ], 'migrations');
+        }
+    }
+
+    public static function migrationFileExists(string $migrationFileName): bool
+    {
+        $len = strlen($migrationFileName);
+        foreach (glob(database_path("migrations/*.php")) as $filename) {
+            if ((substr($filename, -$len) === $migrationFileName)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
