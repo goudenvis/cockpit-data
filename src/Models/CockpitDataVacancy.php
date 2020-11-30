@@ -60,7 +60,7 @@ class CockpitDataVacancy extends Model
         );
     }
 
-    public function isOnline(Carbon $date): bool
+    public function hasState(Carbon $date, $state): bool
     {
         $stateTransitions = $this->stateTransitions->sortByDesc('datetime_created');
 
@@ -70,9 +70,44 @@ class CockpitDataVacancy extends Model
             return false;
         } elseif ($stateTransitionBeforeDate->where('datetime_created', '=', $date)->count() > 1) {
             return $stateTransitionBeforeDate->where('datetime_created', '=', $date)
-                    ->where('after_state', 'Online')
+                    ->where('after_state', $state)
                     ->count() > 0;
         }
-        return  $stateTransitionBeforeDate->first()->after_state == 'Online';
+        return  $stateTransitionBeforeDate->first()->after_state == $state;
+    }
+
+    public function isOnline(Carbon $date): bool
+    {
+        return $this->hasState($date, 'Online');
+    }
+
+    public function isNotOnline(Carbon $date): bool
+    {
+        return !$this->isOnline($date);
+    }
+
+    public function isInactive(Carbon $date): bool
+    {
+        return $this->hasState($date, 'Inactief');
+    }
+
+    public function isNotInactive(Carbon $date): bool
+    {
+        return !$this->isInactive($date);
+    }
+
+    public function getState(Carbon $date): string
+    {
+        $stateTransitions = $this->stateTransitions->sortByDesc('datetime_created');
+
+        $stateTransitionBeforeDate = $stateTransitions->where('datetime_created', '<', $date->endOfDay());
+
+        if ($stateTransitionBeforeDate->count() == 0) {
+            return false;
+        } elseif ($stateTransitionBeforeDate->where('datetime_created', '=', $date)->count() > 1) {
+            return $stateTransitionBeforeDate->where('datetime_created', '=', $date)
+                    ->count() > 0;
+        }
+        return  $stateTransitionBeforeDate->first()->after_state;
     }
 }
