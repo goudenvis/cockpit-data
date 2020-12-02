@@ -20,16 +20,16 @@ class CockpitDataFetchCommand extends Command
 
 //        \DB::enableQueryLog();
 
-        if ( (app()->environment() == 'production' && !$this->option('direct')) ||
-            config('cockpitData.dispatch_jobs') ) {
-            $tables->each(function($table) {
-                Base::dispatch([$table], $this->option('history'))->onQueue('cockpit');
-            });
-        } else {
+//        if ( (app()->environment() == 'production' && !$this->option('direct')) ||
+//            config('cockpitData.dispatch_jobs') ) {
+//            $tables->each(function($table) {
+//                Base::dispatch([$table], $this->option('history'))->onQueue('cockpit');
+//            });
+//        } else {
             $tables->each(function($table) {
                 Fetcher::run($table, $this->option('history'));
             });
-        }
+//        }
 
 //        $this->comment(count(\DB::getQueryLog()) . ' queries has run');
         $this->comment('All done in ' . now()->diffInSeconds($start) . ' seconds');
